@@ -8,7 +8,7 @@ import { edgeConfig } from '@ory/integrations/next';
 
 const ory = new FrontendApi(new Configuration(edgeConfig));
 
-const Authentication = () => {
+const Authentication = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   const [session, setSession] = useState<Session | undefined>();
@@ -29,13 +29,13 @@ const Authentication = () => {
         // Redirect to login page
         return router.push(edgeConfig.basePath + '/ui/login');
       });
-  }, [router]);
+  }, [router, session, logoutUrl]);
 
   if (!session) {
     // Still loading
     return <div>Loading</div>;
   }
-  return <div className="text-xl font-medium text-zinc-500">Home Home</div>;
+  return <div>{children}</div>;
 };
 
 export default Authentication;
